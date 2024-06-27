@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!-- importing bootstrap css and javascript -->
+        <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+            integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+            crossorigin="anonymous">
+        <script
+            src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+            crossorigin="anonymous"></script>
+        <!-- link css for index.css  -->
+        <link rel="stylesheet"
+            href="{{ url_for('static', filename='result.css') }}">
+           
+        <title>Index</title>
+    </head>
+    <body>
+        <!--  main body starts from here  -->
+        <!-- below is the loading / detecting loader that will be shown while the web page loads and script is below for the same -->
+        <div id="loadingdiv">
+            <div class="loading-container">
+            <div class="disease-detection-container">
+                <div class="ml-emoji">🌿</div>
+                <div class="loading-bar">
+                    <div class="loading-progressA"></div>
+                </div>
+            </div>
+            <div class="loader-text">Detecting Plant Diseases</div>
+        </div>
+        </div>
+        <!-- below is navbar code -->
+        <nav class="navbar bg-body-tertiary">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="/">
+                    <img src="{{ url_for('static', filename='6.png') }}"
+                        alt="Logo" width="50" height="50"
+                        class="imagenav d-inline-block align-text-top">
+
+                </a>
+                
+                </div>
+            </div>
+
+        </nav>
+
+        <!-- div to show the disease name -->
+        <div class="result">
+            {% if prediction %}
+            <p class="resulttext text-center"> Leaf is a "{{prediction}}"</p>
+            {% endif %}
+        </div>
+
+        <!-- div conatining results -->
+        <div class="resultarea">
+            <!-- div to show cause of disease -->
+            <div class="resultareatext">
+                
+                <h1 class="resulttext1">About the Disease</h1>
+                <p class=" text-center"> Leaf is a "{{ result_text1 }}"</p>
+                
+            </div>
+            <!-- div to show the same image uploaded by user -->
+            <div class="resultareatext">
+                
+                <h1 class="resulttext1">Image</h1>
+               
+                <img class="resultimage" src="{{new_image_path}}" width="300" height="300">
+                
+            </div>
+            <!-- div to show predicted image using gradcam or else -->
+            <div class="resultareatext">
+                
+                <h1 class="resulttext1">Prediction</h1>
+               
+                <img class="resultimage" src="{{new_image_path}}" width="300" height="300">
+                
+            </div>
+
+            
+        </div>
+
+        <!-- below div is to show the recommended product -->
+        <div class="resultarea">
+            <div class="resultareatext">
+                
+                <h1 class="resulttext1">Recommended Product</h1>
+
+                <!-- not wokring -->
+                <!-- <div class="iframe-container">
+                    <iframe src="{{ result_link1 }}"  height="400" width="800" ></iframe>
+                </div> -->
+                <div class="text-center">
+                    <a href="{{ result_link1 }}" target="_blank">{{ result_link1 }}</a>
+                </div>
+                
+                
+            </div>
+        </div>
+
+        <!-- below is the form to send request for index page -->
+        <form class="form" action="/" method="get" class="text-center">
+            <button class="button-56 btn btn-primary mt-3" type="submit">Detect another image</button>
+        </form>
+        
+        <!--  javascript code to show the loader while the result page loaded  -->
+        <script>
+        var loader=document.getElementById("loadingdiv");
+        window.addEventListener("load",function(){
+            loader.style.display="none";
+        },5000)
+        </script>
+    </body>
+</html>
